@@ -1,9 +1,9 @@
 <template>
   <div class="page-container">
-    <div class="content">
-        <h1>ABOUT US</h1>
+      <div class="content">
+        <h1>Admin page</h1>
         <p>{{ msg }}</p>
-    </div>
+      </div>
   </div>
 </template>
 
@@ -11,7 +11,7 @@
 export default {
     data() {
         return {
-            msg: "we are awesome<3"
+            msg: "welcome!"
         }
     }
 }
@@ -19,6 +19,6 @@ export default {
 
 <style scoped lang="scss">
 .page-container {
-    //background: purple;
+    //background: gray;
 }
 </style>

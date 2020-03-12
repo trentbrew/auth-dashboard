@@ -26,6 +26,10 @@ body {
   margin: 0px;
 }
 
+input {
+  margin-bottom: 12px;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

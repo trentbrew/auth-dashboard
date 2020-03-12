@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <div class="content">
-        <h1>ABOUT US</h1>
+        <h1>About us</h1>
         <p>{{ msg }}</p>
     </div>
   </div>

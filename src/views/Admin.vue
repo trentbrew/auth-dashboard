@@ -11,7 +11,7 @@
 export default {
     data() {
         return {
-            msg: "welcome!"
+            msg: "You are authorized to create, delete, and track users"
         }
     }
 }

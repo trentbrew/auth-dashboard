@@ -22,15 +22,15 @@
     methods: {
       async registerButtonPressed() {
         try {
-          var {
-            user
-          } = await firebase.auth().createUserWithEmailAndPassword(this.email, this.password);
+          var {user} = await firebase.auth().createUserWithEmailAndPassword(this.email, this.password);
           // signout
           firebase.auth().signOut().then(user => {
               this.$router.push("/login");
-              console.log(user);
+              console.log("SUCCESS");
+              console.log("USER OBJECT: " + user);
           });
         } catch (error) {
+          console.error("COULDN'T REGISTER USER");
           console.log(user);
           console.log(error.message);
         }

@@ -3,7 +3,7 @@
       <div class="content">
         <h1>Login</h1>
         <input v-model="email" name="email" type="text" placeholder="Email address" class="email-input"><br>
-        <input v-model="password" name="password" type="password" placeholder="Password address" class="password-input"><br>
+        <input v-model="password" name="password" type="password" placeholder="Password" class="password-input"><br>
                 <button class="button auth-button" @click="loginButtonPressed">Login</button>
       </div>
   </div>
@@ -19,18 +19,15 @@
         password: ""
       };
     },
-
     created() {
-        firebase.auth().onAuthStateChanged(userAuth => {
-            if (userAuth) {
-                firebase
-                    .auth()
-                    .currentUser.getIdTokenResult()
-                    .then(tokenResult => {
-                        console.log(tokenResult.claims);
-                    });
-            }
-        });
+      firebase.auth().onAuthStateChanged(userAuth => {
+          if (userAuth) {
+            firebase.auth().currentUser.getIdTokenResult().then(tokenResult => {
+              console.log(tokenResult.claims);
+              //console.log(userAuth);
+            });
+          }
+      });
     },
     
     methods: {

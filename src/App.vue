@@ -11,7 +11,7 @@
         <router-link to="/register"><li>Signup</li></router-link>
         <router-link to="/login"><li>Login</li></router-link>
         <router-link to="/admin"><li>Admin</li></router-link>
-        <router-link to="/driver"><li>Driver</li></router-link>
+        <router-link to="/driver"><li>Service Provider</li></router-link>
         <router-link to="/customer"><li>Customer</li></router-link>
       </ul>
     </div>

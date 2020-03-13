@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin')
 
+
 admin.initializeApp()
 
 const db = admin.firestore()
@@ -8,9 +9,20 @@ const db = admin.firestore()
 exports.AddUserRole = functions.auth.user().onCreate(async (authUser) => {
 
   if (authUser.email) {
-    const customClaims = {
-      customer: true,
-    };
+        var customClaims = {};
+
+      if((authUser.email === "tbrew@hbrconsulting.com") || (authUser.email === "tbrew1023@gmail.com")) {
+        customClaims = {
+            customer: true,
+            admin: true
+        };
+      }
+      else {
+        customClaims = {
+            customer: true,
+        };
+      }
+
     try {
       var _ = await admin.auth().setCustomUserClaims(authUser.uid, customClaims)
 
@@ -26,12 +38,12 @@ exports.AddUserRole = functions.auth.user().onCreate(async (authUser) => {
 
   }
 
-  // return db.collection("roles").doc(user.uid).set({
-  //   email: user.email,
-  //   subscriber: true
-  // }).catch(error => {
-  //   console.log(error)
-  // })
+  return db.collection("roles").doc(user.uid).set({
+    email: user.email,
+    subscriber: true
+  }).catch(error => {
+    console.log(error)
+  })
 
 });
 

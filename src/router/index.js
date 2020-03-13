@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import firebase from 'firebase'
+//import firebase from 'firebase'
 
 import Home from '@/views/Home'
 import About from '@/views/About'
+import Feed from '@/views/Feed'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
 import Admin from '@/views/Admin'
@@ -29,6 +30,14 @@ let router = new Router({
       component: About,
       meta: {
         guest: true
+      }
+    },
+    {
+      path: '/feed',
+      name: 'feed',
+      component: Feed,
+      meta: {
+        auth: true
       }
     },
     {
@@ -79,33 +88,34 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
 
-  firebase.auth().onAuthStateChanged(userAuth => {
+  /*firebase.auth().onAuthStateChanged(userAuth => {
 
     if (userAuth) {
-      firebase.auth().currentUser.getIdTokenResult()
-        .then(function ({
-          claims
-        }) {
-
+      firebase.auth().currentUser.getIdTokenResult().then(function ({claims}) {
           if (claims.customer) {
-            if (to.path !== '/customer')
+            if ((to.path !== '/') || (to.path !== '/about')) {
               return next({
                 path: '/customer',
               })
-          } else if (claims.admin) {
-            if (to.path !== '/admin')
+            }
+          } 
+          else if (claims.admin) {
+            if ((to.path !== '/') || (to.path !== '/about')) {
               return next({
                 path: '/admin',
               })
-          } else if (claims.driver) {
-            if (to.path !== '/driver')
+            }
+          } 
+          else if (claims.driver) {
+            if ((to.path !== '/') || (to.path !== '/about')) {
               return next({
                 path: '/driver',
               })
+            }
           }
-
         })
-    } else {
+    } 
+    else {
       if (to.matched.some(record => record.meta.auth)) {
         next({
           path: '/login',
@@ -118,7 +128,7 @@ router.beforeEach((to, from, next) => {
       }
     }
 
-  })
+  })*/
 
   next()
 

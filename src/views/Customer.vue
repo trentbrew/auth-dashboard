@@ -1,20 +1,38 @@
 <template>
   <div class="page-container">
     <div class="content">
-        <h1>Customer page page</h1>
-        <p>{{ msg }}</p>
+        <h1 v-if="user">{{ user.email }}</h1>
+        <button class="button sign-out" @click="signout">Sign out</button>
     </div>
   </div>
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
     data() {
         return {
-            msg: "welcome! thanks for joining"
+            user: null
+        };
+    },
+    created() {
+        var self = this;
+        firebase.auth().onAuthStateChanged(function(user) {
+            self.user = user;
+        });
+    },
+    methods: {
+        signout() {
+            firebase.auth().signOut().then(user => {
+                // this.$store.commit("setUser", null);
+                this.$router.push("/");
+                console.log(user);
+                document.location.reload();
+            });
         }
     }
-}
+};
 </script>
 
 <style scoped lang="scss">

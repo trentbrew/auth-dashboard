@@ -22,10 +22,7 @@
     created() {
       firebase.auth().onAuthStateChanged(userAuth => {
           if (userAuth) {
-            firebase.auth().currentUser.getIdTokenResult().then(tokenResult => {
-              console.log(tokenResult.claims);
-              //console.log(userAuth);
-            });
+            //document.location.reload();
           }
       });
     },
@@ -40,6 +37,8 @@
           console.log(user);
           console.log(error.message);
         }
+        console.log("ROUTING TO PROFILE");
+        this.$router.push("/customer");
       }
     }
   };

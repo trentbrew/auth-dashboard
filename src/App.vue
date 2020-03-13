@@ -7,17 +7,48 @@
       <ul class="nav-inner">
         <router-link to="/"><li>Home</li></router-link>
         <router-link to="/about"><li>About</li></router-link>
+        <router-link v-if="user" to="/feed"><li>Feed</li></router-link>
         <li class="divider">|</li>
-        <router-link to="/register"><li>Signup</li></router-link>
-        <router-link to="/login"><li>Login</li></router-link>
-        <router-link to="/admin"><li>Admin</li></router-link>
-        <router-link to="/driver"><li>Service Provider</li></router-link>
-        <router-link to="/customer"><li>Customer</li></router-link>
+        <router-link v-if="!user" to="/register"><li>Sign up</li></router-link>
+        <router-link v-if="!user" to="/login"><li>Login</li></router-link>
+        <router-link v-if="admin" to="/admin"><li>Admin</li></router-link>
+        <router-link v-if="driver || admin" to="/driver"><li>Servicer</li></router-link>
+        <router-link v-if="customer || admin" to="/customer"><li>Profile</li></router-link>
       </ul>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import firebase from "firebase";
+export default {
+    data() {
+        return {
+            user: null,
+            customer: null,
+            driver: null,
+            admin: null
+        };
+    },
+
+    created() {
+      var self = this;
+      firebase.auth().onAuthStateChanged(userAuth => {
+        self.user = userAuth;
+        console.log(self.user.uid);
+
+        firebase.auth().currentUser.getIdTokenResult().then(({claims}) => {
+          console.log(claims);
+          self.customer = claims.customer;
+          self.driver = claims.driver;
+          self.admin = claims.admin;
+        });
+      });
+  },
+    
+};
+</script>
 
 <style lang="scss">
 $navHeight: 80px;
@@ -89,7 +120,7 @@ input {
     text-decoration: none;
 
     &.router-link-exact-active {
-      color: brown;
+      color: lightseagreen;
       text-decoration: underline;
     }
   }
@@ -110,7 +141,7 @@ input {
 .logo-container {
   //background: red;
   height: $navHeight;
-  width: 160px;
+  width: 90px;
   position: absolute;
   //left: 24px;
   display: flex;
@@ -119,12 +150,26 @@ input {
 
   .logo {
     //background: yellow;
-    height: 60px;
-    width: 120px;
-    background-image: url("assets/HBR-Logo.png");
+    height: 45px;
+    width: 45px;
+    background-image: url("assets/oolong.svg");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    opacity: 0.3;
   }
+}
+
+button {
+    border: none;
+    border-radius: 12px;
+    background: hotpink;
+    color: white;
+    padding: 12px;
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(0.6);
+    }
 }
 </style>
